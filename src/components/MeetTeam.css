@@ -1,0 +1,182 @@
+/* ══════════════════════════════════════
+   Meet Our Team Section
+   ══════════════════════════════════════ */
+
+.meet-team {
+  overflow: hidden;
+}
+
+/* ── Header row ─────────────────────── */
+.meet-team-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.meet-team-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.meet-team-sub {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+  max-width: 380px;
+}
+
+/* Arrow buttons */
+.meet-team-arrows {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  padding-bottom: 4px;
+}
+
+.mt-arrow {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.mt-arrow:hover:not(:disabled) {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.mt-arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ══════════════════════════════════════
+   Accordion Card Strip
+   ══════════════════════════════════════ */
+.mt-strip {
+  display: flex;
+  gap: 10px;
+  height: 460px;
+  align-items: stretch;
+}
+
+/* ── Individual card ─────────────────── */
+.mt-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  /* Collapsed by default */
+  flex: 0.4;
+  transition: flex 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mt-card.active {
+  /* Expanded */
+  flex: 3.5;
+}
+
+/* Photo */
+.mt-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  /* Grayscale for inactive cards */
+  filter: grayscale(100%) brightness(0.65);
+  transition: filter 0.55s ease, transform 0.55s ease;
+}
+
+.mt-card.active .mt-card-img {
+  filter: grayscale(0%) brightness(1);
+}
+
+.mt-card:hover:not(.active) .mt-card-img {
+  filter: grayscale(60%) brightness(0.75);
+}
+
+/* Gradient overlay on active card */
+.mt-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(100, 80, 220, 0.35) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Info text (active card only) ───── */
+.mt-card-info {
+  position: absolute;
+  bottom: 28px;
+  left: 28px;
+  right: 28px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s;
+  pointer-events: none;
+}
+
+.mt-card-info.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mt-card-role {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-primary);
+  margin-bottom: 6px;
+}
+
+.mt-card-name {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Responsive ───────────────────────── */
+@media (max-width: 768px) {
+  .mt-strip {
+    height: 340px;
+    gap: 6px;
+  }
+
+  .meet-team-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .mt-card-name {
+    font-size: 1.1rem;
+  }
+
+  .mt-card-info {
+    bottom: 18px;
+    left: 16px;
+    right: 16px;
+  }
+}
