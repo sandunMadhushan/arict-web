@@ -12,6 +12,7 @@ import Testimonials from './components/Testimonials';
 import Blogs from './components/Blogs';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import './index.css';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <FAQ />
       </main>
       <Footer />
+      <ScrollToTop />
     </>
   );
 }
