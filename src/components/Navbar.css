@@ -19,29 +19,31 @@
   justify-content: space-between;
   align-items: center;
   /* Pill glassmorphism — always present, deepens on scroll */
-  background: rgba(18, 18, 18, 0.55);
-  backdrop-filter: blur(8px) saturate(140%);
-  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  background: rgba(18, 18, 18, 0.3);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
   padding: 8px 16px 8px 20px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow:
-    0 2px 24px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  overflow: hidden;
+    0 4px 32px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  /* clip-path instead of overflow:hidden — achieves same pill clipping
+     without breaking backdrop-filter in production/deployed environments */
+  clip-path: inset(0 round 999px);
   transition: background 0.4s ease, backdrop-filter 0.4s ease,
               box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
 /* Deeper glass effect on scroll — only the pill */
 .navbar.scrolled .navbar-container {
-  background: rgba(12, 12, 12, 0.78);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(10, 10, 10, 0.45);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border-color: rgba(255, 255, 255, 0.22);
   box-shadow:
-    0 4px 40px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 8px 48px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 /* Top prismatic light-reflection line */
