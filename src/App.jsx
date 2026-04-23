@@ -1,22 +1,20 @@
 import React, { useEffect } from 'react';
 import Lenis from 'lenis';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Marquee from './components/Marquee';
-import Services from './components/Services';
-import About from './components/About';
-import Process from './components/Process';
-import Portfolio from './components/Portfolio';
-import Awards from './components/Awards';
-import Contact from './components/Contact';
-import Testimonials from './components/Testimonials';
-import Blogs from './components/Blogs';
-import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import Home from './pages/Home';
+import About from './pages/About';
+import Services from './pages/Services';
+import Portfolio from './pages/Portfolio';
+import Blogs from './pages/Blogs';
+import Contact from './pages/Contact';
 import './index.css';
 
 function App() {
+  const location = useLocation();
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -26,7 +24,6 @@ function App() {
       touchMultiplier: 2,
     });
 
-    // expose so ScrollToTop can call lenis.scrollTo(0)
     window.__lenis = lenis;
 
     let rafId;
@@ -43,21 +40,26 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
+
   return (
     <>
       <Navbar />
       <main>
-        <Hero />
-        <Marquee />
-        <Services />
-        <About />
-        <Process />
-        <Portfolio />
-        <Awards />
-        <Contact />
-        <Testimonials />
-        <Blogs />
-        <FAQ />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
       </main>
       <Footer />
       <ScrollToTop />
