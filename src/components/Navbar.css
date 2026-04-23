@@ -5,42 +5,12 @@
   width: 100%;
   padding: 16px 0;
   z-index: 1000;
-  transition: padding 0.3s ease;
-}
-
-/* Pseudo-element holds the blur — this is the most reliable
-   cross-browser approach for backdrop-filter on fixed elements */
-.navbar::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(8, 8, 8, 0.45);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  z-index: -1;
-  /* Mask: stronger fade on sides so pill stands out */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    black 0%,
-    black 70%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    black 0%,
-    black 70%,
-    transparent 100%
-  );
+  transition: padding 0.4s ease;
+  /* No background on the navbar itself — only the pill gets the glass */
 }
 
 .navbar.scrolled {
   padding: 10px 0;
-}
-
-.navbar.scrolled::before {
-  background: rgba(5, 5, 5, 0.65);
-  backdrop-filter: blur(36px) saturate(200%);
-  -webkit-backdrop-filter: blur(36px) saturate(200%);
 }
 
 .navbar-container {
@@ -48,18 +18,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* Dark frosted glass pill — like the image */
-  background: rgba(18, 18, 18, 0.72);
-  backdrop-filter: blur(28px) saturate(160%);
-  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  /* Pill glassmorphism — always present, deepens on scroll */
+  background: rgba(18, 18, 18, 0.55);
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
   padding: 8px 16px 8px 20px;
   border-radius: 999px;
-  /* Subtle outer border */
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow:
-    0 2px 32px rgba(0, 0, 0, 0.45),
+    0 2px 24px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   overflow: hidden;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease,
+              box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+/* Deeper glass effect on scroll — only the pill */
+.navbar.scrolled .navbar-container {
+  background: rgba(12, 12, 12, 0.78);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 4px 40px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 /* Top prismatic light-reflection line */
