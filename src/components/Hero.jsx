@@ -4,7 +4,7 @@ import './Hero.css';
 
 const Hero = () => {
   return (
-    <section id="home" className="hero section-padding">
+    <section id="home" className="hero">
       <div className="container hero-container">
         <div className="hero-content">
           <h1>
@@ -26,7 +26,7 @@ const Hero = () => {
             </button>
           </div>
 
-          <div className="hero-stats">
+          {/* <div className="hero-stats">
             <div className="stat-item">
               <CheckCircle size={24} className="text-primary" />
               <div>
@@ -41,7 +41,7 @@ const Hero = () => {
                 <p>Guaranteed</p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="hero-visual">
