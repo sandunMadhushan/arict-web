@@ -3,6 +3,7 @@ import AboutComponent from '../components/About';
 import Process from '../components/Process';
 import Awards from '../components/Awards';
 import MeetTeam from '../components/MeetTeam';
+import Team from '../components/Team';
 
 const About = () => {
   return (
@@ -11,6 +12,7 @@ const About = () => {
       <Process />
       <Awards />
       <MeetTeam />
+      <Team />
     </div>
   );
 };
