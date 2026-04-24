@@ -7,7 +7,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import Events from './pages/Events';
-import Portfolio from './pages/Portfolio';
+import Gallery from './pages/Gallery';
 import Blogs from './pages/Blogs';
 import Contact from './pages/Contact';
 import './index.css';
@@ -56,7 +56,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/events" element={<Events />} />
-          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
