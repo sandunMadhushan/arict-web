@@ -53,6 +53,7 @@ const Navbar = () => {
           <li onMouseEnter={handleMouseEnter}><Link to="/about">About</Link></li>
           <li onMouseEnter={handleMouseEnter}><Link to="/events">Events</Link></li>
           <li onMouseEnter={handleMouseEnter}><Link to="/gallery">Gallery</Link></li>
+          <li onMouseEnter={handleMouseEnter}><Link to="/blogs">Blogs</Link></li>
           <li onMouseEnter={handleMouseEnter}><Link to="/contact">Contact</Link></li>
         </ul>
         <Link to="/contact" className="btn btn-primary">Get a quote</Link>
