@@ -1,5 +1,5 @@
-import { sql } from './_db.js';
-import { requireAuth, checkAuth } from './_auth.js';
+import { sql } from '../_db.js';
+import { requireAuth, checkAuth } from '../_auth.js';
 
 export default async function handler(req, res) {
   try {
