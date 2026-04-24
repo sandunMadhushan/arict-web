@@ -1,6 +1,6 @@
-# Arict Web V2 🚀
+# ARICT Web 🚀
 
-Welcome to the Arict Portfolio and Events Platform. This is a modern, high-performance web application built with React, Vite, and custom CSS glassmorphism themes.
+Welcome to the ARICT Portfolio and Events Platform. This is a modern, high-performance web application built with React, Vite, and custom CSS glassmorphism themes.
 
 ## ✨ Features
 - **3D Interactive Gallery**: A custom scroll-triggered horizontal carousel for highlighting portfolios and memories.

@@ -1,6 +1,6 @@
-# Contributing to Arict Web V2
+# Contributing to ARICT Web
 
-First off, thank you for considering contributing to Arict Web V2! It's people like you that make open source such a great community.
+First off, thank you for considering contributing to ARICT Web V2! It's people like you that make open source such a great community.
 
 ## How Can I Contribute?
 
