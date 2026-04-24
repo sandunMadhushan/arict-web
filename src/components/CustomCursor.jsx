@@ -26,7 +26,11 @@ const CustomCursor = () => {
     };
 
     const handleMouseOut = (e) => {
-      if (e.relatedTarget === null) {
+      // Hide when leaving the browser window OR entering an iframe
+      // (iframes capture mouse events so our cursor would freeze visibly)
+      const isLeavingWindow = e.relatedTarget === null;
+      const isEnteringIframe = e.relatedTarget?.tagName?.toLowerCase() === 'iframe';
+      if (isLeavingWindow || isEnteringIframe) {
         setIsVisible(false);
       }
     };

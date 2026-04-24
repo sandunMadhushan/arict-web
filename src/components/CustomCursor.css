@@ -21,6 +21,15 @@
     opacity: 0;
   }
 
+  /* When map iframe is in interactive mode — hide custom cursor, restore system cursor */
+  body.map-interactive-mode .custom-cursor-container {
+    opacity: 0;
+  }
+
+  body.map-interactive-mode iframe {
+    cursor: auto !important;
+  }
+
   .custom-cursor-container.hovering {
     transform: translate(-10%, -10%);
   }
