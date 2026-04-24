@@ -43,6 +43,8 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container navbar-container">
+        {/* Dedicated glass layer — isolated from all parent stacking contexts */}
+        <span className="navbar-glass" aria-hidden="true" />
         <Link to="/" className="logo">
           <img src={logo} alt="ARICT Logo" className="logo-img" />
         </Link>

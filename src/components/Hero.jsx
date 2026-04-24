@@ -14,7 +14,7 @@ const Hero = () => {
             <span className="text-primary">With ARICT</span>
           </h1>
           <p className="hero-description">
-            A premium digital agency dedicated to elevating your brand through cutting-edge web design, development, and strategic marketing.
+            Building a strong ICT community by connecting students with skills, projects, and opportunities.
           </p>
 
           <div className="hero-actions">

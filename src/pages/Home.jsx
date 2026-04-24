@@ -6,7 +6,7 @@ import FAQ from '../components/FAQ';
 
 const Home = () => {
   return (
-    <div className="page-transition">
+    <div className="page-transition" style={{ overflowX: 'hidden' }}>
       <Hero />
       <Marquee />
       <Testimonials />
