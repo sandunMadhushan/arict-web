@@ -1,8 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowRight, MapPin, Mail, Phone } from 'lucide-react';
+import { toast } from 'sonner';
 import './Contact.css';
 
 const Contact = () => {
+  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '', subject: '', message: '' });
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    const toastId = toast.loading('Sending your message...');
+    try {
+      // Simulate network delay — replace with real API call when ready
+      await new Promise((res) => setTimeout(res, 1200));
+      toast.success('Message sent! We will get back to you soon.', { id: toastId });
+      setForm({ firstName: '', lastName: '', email: '', phone: '', subject: '', message: '' });
+    } catch (err) {
+      toast.error('Failed to send message. Please try again.', { id: toastId });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <section id="contact" className="contact bg-black section-padding">
       <div className="container">
@@ -14,19 +36,19 @@ const Contact = () => {
               <h2>Join Us In Creating <br/>Remarkable Impact</h2>
             </div>
 
-            <form className="contact-form">
+            <form className="contact-form" onSubmit={handleSubmit}>
               <div className="form-row">
-                <input type="text" placeholder="First Name *" required />
-                <input type="text" placeholder="Last Name *" required />
+                <input type="text" name="firstName" placeholder="First Name *" required value={form.firstName} onChange={handleChange} />
+                <input type="text" name="lastName" placeholder="Last Name *" required value={form.lastName} onChange={handleChange} />
               </div>
               <div className="form-row">
-                <input type="email" placeholder="Email *" required />
-                <input type="tel" placeholder="Phone Number *" required />
+                <input type="email" name="email" placeholder="Email *" required value={form.email} onChange={handleChange} />
+                <input type="tel" name="phone" placeholder="Phone Number *" required value={form.phone} onChange={handleChange} />
               </div>
-              <input type="text" placeholder="Subject *" required />
-              <textarea placeholder="Message *" rows="4" required></textarea>
-              <button type="submit" className="btn btn-primary submit-btn">
-                Send Message <ArrowRight size={20} />
+              <input type="text" name="subject" placeholder="Subject *" required value={form.subject} onChange={handleChange} />
+              <textarea name="message" placeholder="Message *" rows="4" required value={form.message} onChange={handleChange}></textarea>
+              <button type="submit" className="btn btn-primary submit-btn" disabled={submitting}>
+                {submitting ? 'Sending...' : 'Send Message'} <ArrowRight size={20} />
               </button>
             </form>
           </div>

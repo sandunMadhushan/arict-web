@@ -15,52 +15,98 @@ import TextAlign from '@tiptap/extension-text-align';
 import { toast } from 'sonner';
 
 const MenuBar = ({ editor }) => {
+  const [inputMode, setInputMode] = React.useState(null); // 'link' | 'image' | null
+  const [inputValue, setInputValue] = React.useState('');
+
   if (!editor) return null;
 
-  const handleAddLink = () => {
-    const url = window.prompt('URL');
+  const confirmLink = () => {
+    const url = inputValue.trim();
     if (url) {
       editor.chain().focus().setLink({ href: url }).run();
-    } else if (url === '') {
+      toast.success('Link inserted');
+    } else {
       editor.chain().focus().unsetLink().run();
     }
+    setInputMode(null);
+    setInputValue('');
   };
 
-  const handleAddImage = () => {
-    const url = window.prompt('Google Drive image link or direct image URL');
+  const confirmImage = () => {
+    const url = inputValue.trim();
     if (url) {
       const embedUrl = getDriveEmbedUrl(url) || url;
       editor.chain().focus().setImage({ src: embedUrl }).run();
+      toast.success('Image inserted');
     }
+    setInputMode(null);
+    setInputValue('');
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); inputMode === 'link' ? confirmLink() : confirmImage(); }
+    if (e.key === 'Escape') { setInputMode(null); setInputValue(''); }
+  };
+
+  const inlineInputStyle = {
+    display: 'flex', alignItems: 'center', gap: '6px',
+    padding: '4px 8px', background: 'rgba(255,255,255,0.06)',
+    border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px',
+    flexGrow: 1
+  };
+  const inlineInput = {
+    background: 'transparent', border: 'none', outline: 'none',
+    color: '#fff', fontSize: '0.85rem', flexGrow: 1, minWidth: 0
+  };
+  const confirmBtn = {
+    background: 'var(--color-primary)', border: 'none', borderRadius: '6px',
+    color: '#fff', padding: '3px 10px', fontSize: '0.8rem', cursor: 'pointer', whiteSpace: 'nowrap'
+  };
+  const cancelBtn = {
+    background: 'rgba(255,255,255,0.08)', border: 'none', borderRadius: '6px',
+    color: 'rgba(255,255,255,0.6)', padding: '3px 8px', fontSize: '0.8rem', cursor: 'pointer'
   };
 
   return (
-    <div className="tiptap-toolbar">
-      <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} className={`toolbar-btn ${editor.isActive('bold') ? 'is-active' : ''}`} title="Bold"><Bold size={16} /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()} className={`toolbar-btn ${editor.isActive('italic') ? 'is-active' : ''}`} title="Italic"><Italic size={16} /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleUnderline().run()} className={`toolbar-btn ${editor.isActive('underline') ? 'is-active' : ''}`} title="Underline"><Underline size={16} /></button>
-      
-      <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.2)', margin: '0 5px' }}></div>
-      
-      <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={`toolbar-btn ${editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}`} title="Heading 1"><Heading1 size={16} /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={`toolbar-btn ${editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}`} title="Heading 2"><Heading2 size={16} /></button>
-      
-      <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.2)', margin: '0 5px' }}></div>
-      
-      <button type="button" onClick={() => editor.chain().focus().setTextAlign('left').run()} className={`toolbar-btn ${editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}`} title="Align Left"><AlignLeft size={16} /></button>
-      <button type="button" onClick={() => editor.chain().focus().setTextAlign('center').run()} className={`toolbar-btn ${editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}`} title="Align Center"><AlignCenter size={16} /></button>
-      <button type="button" onClick={() => editor.chain().focus().setTextAlign('right').run()} className={`toolbar-btn ${editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''}`} title="Align Right"><AlignRight size={16} /></button>
-      
-      <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.2)', margin: '0 5px' }}></div>
-      
-      <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} className={`toolbar-btn ${editor.isActive('bulletList') ? 'is-active' : ''}`} title="Bullet List"><List size={16} /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`toolbar-btn ${editor.isActive('orderedList') ? 'is-active' : ''}`} title="Ordered List"><ListOrdered size={16} /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={`toolbar-btn ${editor.isActive('blockquote') ? 'is-active' : ''}`} title="Blockquote"><Quote size={16} /></button>
-      
-      <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.2)', margin: '0 5px' }}></div>
-
-      <button type="button" onClick={handleAddLink} className={`toolbar-btn ${editor.isActive('link') ? 'is-active' : ''}`} title="Add Link"><LinkIcon size={16} /></button>
-      <button type="button" onClick={handleAddImage} className="toolbar-btn" title="Add Image"><ImageIcon size={16} /></button>
+    <div className="tiptap-toolbar" style={{ flexWrap: 'wrap', gap: '4px' }}>
+      {inputMode ? (
+        <div style={inlineInputStyle}>
+          <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', whiteSpace: 'nowrap' }}>
+            {inputMode === 'link' ? '🔗 URL:' : '🖼 Image URL:'}
+          </span>
+          <input
+            autoFocus
+            type="url"
+            placeholder={inputMode === 'link' ? 'https://example.com' : 'https://drive.google.com/...'}
+            value={inputValue}
+            onChange={e => setInputValue(e.target.value)}
+            onKeyDown={handleKeyDown}
+            style={inlineInput}
+          />
+          <button type="button" style={confirmBtn} onClick={inputMode === 'link' ? confirmLink : confirmImage}>Insert</button>
+          <button type="button" style={cancelBtn} onClick={() => { setInputMode(null); setInputValue(''); }}>✕</button>
+        </div>
+      ) : (
+        <>
+          <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} className={`toolbar-btn ${editor.isActive('bold') ? 'is-active' : ''}`} title="Bold"><Bold size={16} /></button>
+          <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()} className={`toolbar-btn ${editor.isActive('italic') ? 'is-active' : ''}`} title="Italic"><Italic size={16} /></button>
+          <button type="button" onClick={() => editor.chain().focus().toggleUnderline().run()} className={`toolbar-btn ${editor.isActive('underline') ? 'is-active' : ''}`} title="Underline"><Underline size={16} /></button>
+          <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.2)', margin: '0 5px' }}></div>
+          <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={`toolbar-btn ${editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}`} title="Heading 1"><Heading1 size={16} /></button>
+          <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={`toolbar-btn ${editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}`} title="Heading 2"><Heading2 size={16} /></button>
+          <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.2)', margin: '0 5px' }}></div>
+          <button type="button" onClick={() => editor.chain().focus().setTextAlign('left').run()} className={`toolbar-btn ${editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}`} title="Align Left"><AlignLeft size={16} /></button>
+          <button type="button" onClick={() => editor.chain().focus().setTextAlign('center').run()} className={`toolbar-btn ${editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}`} title="Align Center"><AlignCenter size={16} /></button>
+          <button type="button" onClick={() => editor.chain().focus().setTextAlign('right').run()} className={`toolbar-btn ${editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''}`} title="Align Right"><AlignRight size={16} /></button>
+          <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.2)', margin: '0 5px' }}></div>
+          <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} className={`toolbar-btn ${editor.isActive('bulletList') ? 'is-active' : ''}`} title="Bullet List"><List size={16} /></button>
+          <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`toolbar-btn ${editor.isActive('orderedList') ? 'is-active' : ''}`} title="Ordered List"><ListOrdered size={16} /></button>
+          <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={`toolbar-btn ${editor.isActive('blockquote') ? 'is-active' : ''}`} title="Blockquote"><Quote size={16} /></button>
+          <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.2)', margin: '0 5px' }}></div>
+          <button type="button" onClick={() => { setInputMode('link'); setInputValue(''); }} className={`toolbar-btn ${editor.isActive('link') ? 'is-active' : ''}`} title="Add Link"><LinkIcon size={16} /></button>
+          <button type="button" onClick={() => { setInputMode('image'); setInputValue(''); }} className="toolbar-btn" title="Add Image"><ImageIcon size={16} /></button>
+        </>
+      )}
     </div>
   );
 };

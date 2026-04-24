@@ -186,7 +186,7 @@ const CalendarWidget = () => {
                     >
                       <div className="cal-event-item-title">{event.title}</div>
                       <div className="cal-event-item-meta">
-                        <span className="cal-meta-item"><Clock size={12} /> {new Date(event.event_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                        <span className="cal-meta-item"><Clock size={12} /> {new Date(event.event_date.replace(/Z$/, '')).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                       </div>
                     </div>
                   ))}
