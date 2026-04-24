@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-// import Lenis from 'lenis'; // TEMPORARILY DISABLED
+import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -41,31 +41,37 @@ const PublicLayout = ({ children }) => (
 function App() {
   const location = useLocation();
 
-  // TEMPORARILY DISABLED: Lenis smooth scrolling (to debug navbar blur/glassmorphism)
-  // useEffect(() => {
-  //   const lenis = new Lenis({
-  //     duration: 1.2,
-  //     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  //     smoothWheel: true,
-  //     wheelMultiplier: 1,
-  //     touchMultiplier: 2,
-  //   });
-  //   window.__lenis = lenis;
-  //   let rafId;
-  //   function raf(time) {
-  //     lenis.raf(time);
-  //     rafId = requestAnimationFrame(raf);
-  //   }
-  //   rafId = requestAnimationFrame(raf);
-  //   return () => {
-  //     cancelAnimationFrame(rafId);
-  //     lenis.destroy();
-  //     window.__lenis = null;
-  //   };
-  // }, []);
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+    });
+
+    window.__lenis = lenis;
+
+    let rafId;
+    function raf(time) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+      window.__lenis = null;
+    };
+  }, []);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, [location.pathname]);
 
   return (
