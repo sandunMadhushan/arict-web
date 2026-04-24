@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Mail } from 'lucide-react';
 
 /* Inline brand icons — lucide-react version doesn't export these */
@@ -14,85 +14,21 @@ const LinkedInIcon = () => (
   </svg>
 );
 
+import { apiFetch } from '../utils/api';
 import './MeetTeam.css';
 
-const team = [
-  {
-    id: 1,
-    name: "Kavindu Perera",
-    role: "President, Arict",
-    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
-    github: "https://github.com/",
-    linkedin: "https://linkedin.com/in/",
-    email: "member@arict.lk"
-  },
-  {
-    id: 2,
-    name: "Senuri Bandara",
-    role: "Vice President, Arict",
-    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80",
-    github: "https://github.com/",
-    linkedin: "https://linkedin.com/in/",
-    email: "member@arict.lk"
-  },
-  {
-    id: 3,
-    name: "Tharindu Silva",
-    role: "Secretary, Arict",
-    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
-    github: "https://github.com/",
-    linkedin: "https://linkedin.com/in/",
-    email: "member@arict.lk"
-  },
-  {
-    id: 4,
-    name: "Dilini Fernando",
-    role: "Treasurer, Arict",
-    img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=600&q=80",
-    github: "https://github.com/",
-    linkedin: "https://linkedin.com/in/",
-    email: "member@arict.lk"
-  },
-  {
-    id: 5,
-    name: "Isuru Madusanka",
-    role: "Events Director, Arict",
-    img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80",
-    github: "https://github.com/",
-    linkedin: "https://linkedin.com/in/",
-    email: "member@arict.lk"
-  },
-  {
-    id: 6,
-    name: "Amali Wijesinghe",
-    role: "Media Director, Arict",
-    img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
-    github: "https://github.com/",
-    linkedin: "https://linkedin.com/in/",
-    email: "member@arict.lk"
-  },
-  {
-    id: 7,
-    name: "Ravindu Jayawardena",
-    role: "Technical Lead, Arict",
-    img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80",
-    github: "https://github.com/",
-    linkedin: "https://linkedin.com/in/",
-    email: "member@arict.lk"
-  },
-  {
-    id: 8,
-    name: "Sachini Kumari",
-    role: "Design Lead, Arict",
-    img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80",
-    github: "https://github.com/",
-    linkedin: "https://linkedin.com/in/",
-    email: "member@arict.lk"
-  },
-];
-
 const MeetTeam = () => {
-  const [active, setActive] = useState(3);
+  const [team, setTeam] = useState([]);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    apiFetch('/members')
+      .then(data => {
+        setTeam(data || []);
+        if (data && data.length > 3) setActive(3);
+      })
+      .catch(err => console.error("Failed to load team:", err));
+  }, []);
 
   const prev = () => setActive(i => Math.max(0, i - 1));
   const next = () => setActive(i => Math.min(team.length - 1, i + 1));
@@ -122,6 +58,7 @@ const MeetTeam = () => {
 
         {/* Accordion card strip */}
         <div className="mt-strip">
+          {team.length === 0 && <p style={{ color: 'var(--color-text-muted)', textAlign: 'center', width: '100%' }}>Team members not added yet.</p>}
           {team.map((member, idx) => {
             const isActive = idx === active;
             return (
@@ -130,7 +67,7 @@ const MeetTeam = () => {
                 className={`mt-card ${isActive ? 'active' : ''}`}
                 onMouseEnter={() => setActive(idx)}
               >
-                <img src={member.img} alt={member.name} className="mt-card-img" />
+                <img src={member.photo_url || 'https://via.placeholder.com/600'} alt={member.name} className="mt-card-img" />
 
                 {isActive && <div className="mt-card-overlay" />}
 
@@ -140,21 +77,27 @@ const MeetTeam = () => {
 
                   {/* Social links */}
                   <div className="mt-card-socials">
-                    <a href={member.github} target="_blank" rel="noopener noreferrer"
-                      className="mt-social-btn" aria-label={`${member.name} GitHub`}
-                      onClick={e => e.stopPropagation()}>
-                      <GitHubIcon />
-                    </a>
-                    <a href={member.linkedin} target="_blank" rel="noopener noreferrer"
-                      className="mt-social-btn mt-social-linkedin" aria-label={`${member.name} LinkedIn`}
-                      onClick={e => e.stopPropagation()}>
-                      <LinkedInIcon />
-                    </a>
-                    <a href={`mailto:${member.email}`}
-                      className="mt-social-btn mt-social-email" aria-label={`Email ${member.name}`}
-                      onClick={e => e.stopPropagation()}>
-                      <Mail size={16} />
-                    </a>
+                    {member.github_url && (
+                      <a href={member.github_url} target="_blank" rel="noopener noreferrer"
+                        className="mt-social-btn" aria-label={`${member.name} GitHub`}
+                        onClick={e => e.stopPropagation()}>
+                        <GitHubIcon />
+                      </a>
+                    )}
+                    {member.linkedin_url && (
+                      <a href={member.linkedin_url} target="_blank" rel="noopener noreferrer"
+                        className="mt-social-btn mt-social-linkedin" aria-label={`${member.name} LinkedIn`}
+                        onClick={e => e.stopPropagation()}>
+                        <LinkedInIcon />
+                      </a>
+                    )}
+                    {member.email && (
+                      <a href={`mailto:${member.email}`}
+                        className="mt-social-btn mt-social-email" aria-label={`Email ${member.name}`}
+                        onClick={e => e.stopPropagation()}>
+                        <Mail size={16} />
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
