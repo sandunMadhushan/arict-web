@@ -5,9 +5,11 @@ import './Events.css';
 
 // Live countdown hook — ticks every second
 const useCountdown = (targetDate) => {
+  const parseLocal = (str) => str ? new Date(str.replace(/Z$/, '')) : null;
   const calcTime = () => {
-    const diff = new Date(targetDate) - new Date();
-    if (!targetDate || diff <= 0) return { hours: 0, minutes: 0, seconds: 0, expired: true };
+    const target = parseLocal(targetDate);
+    const diff = target - new Date();
+    if (!target || diff <= 0) return { hours: 0, minutes: 0, seconds: 0, expired: true };
     const totalSecs = Math.floor(diff / 1000);
     return {
       hours: Math.floor(totalSecs / 3600),
@@ -68,10 +70,17 @@ const Events = () => {
     return <div style={{ color: 'white', textAlign: 'center', padding: '100px' }}>Loading events...</div>;
   }
 
-  // Format date helper
+  // Strip trailing 'Z' if present: Neon returns timestamp (no-tz) values with a 'Z'
+  // suffix, causing new Date() to treat them as UTC and shift by the local offset.
+  // Removing 'Z' makes JS parse it as local time — matching what was stored.
+  const parseLocalDate = (str) => {
+    if (!str) return null;
+    return new Date(str.replace(/Z$/, ''));
+  };
+
   const formatDate = (dateString) => {
     if (!dateString) return { day: '-', month: '-' };
-    const d = new Date(dateString);
+    const d = parseLocalDate(dateString);
     return {
       day: d.toLocaleString('default', { day: '2-digit' }),
       month: d.toLocaleString('default', { month: 'short' }),

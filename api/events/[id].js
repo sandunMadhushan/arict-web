@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         UPDATE events 
         SET title = ${title}, 
             description = ${description}, 
-            event_date = ${event_date}, 
+            event_date = ${event_date}::timestamp, 
             location = ${location}, 
             image_url = ${image_url}, 
             registration_link = ${registration_link}, 

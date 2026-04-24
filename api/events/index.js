@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       
       const newEvent = await sql`
         INSERT INTO events (title, description, event_date, location, image_url, registration_link, capacity)
-        VALUES (${title}, ${description}, ${event_date}, ${location}, ${image_url}, ${registration_link}, ${capacity})
+        VALUES (${title}, ${description}, ${event_date}::timestamp, ${location}, ${image_url}, ${registration_link}, ${capacity})
         RETURNING *
       `;
       
