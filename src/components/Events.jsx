@@ -58,16 +58,111 @@ const Events = () => {
     apiFetch('/events')
       .then(data => {
         setEvents(data || []);
-        setLoading(false);
       })
       .catch(err => {
         console.error('Failed to load events:', err);
-        setLoading(false);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   if (loading) {
-    return <div style={{ color: 'white', textAlign: 'center', padding: '100px' }}>Loading events...</div>;
+    return (
+      <>
+        {/* Skeleton: SECTION 1 (Standard Grid) */}
+        <section className="events-standard section-padding bg-black">
+          <div className="container">
+            <div className="section-header-flex">
+              <div className="skeleton-box" style={{ height: '40px', width: '300px' }}></div>
+              <div className="skeleton-box" style={{ height: '20px', width: '120px' }}></div>
+            </div>
+            <div className="events-grid-4">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div className="skeleton-box" style={{ height: '240px', borderRadius: '16px' }}></div>
+                  <div className="skeleton-box" style={{ height: '24px', width: '80%' }}></div>
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <div className="skeleton-box" style={{ height: '16px', width: '40%' }}></div>
+                    <div className="skeleton-box" style={{ height: '16px', width: '30%' }}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Skeleton: SECTION 2 (Featured Grid) */}
+        <section className="events-featured section-padding bg-black-light">
+          <div className="container">
+            <div className="events-featured-header" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '40px' }}>
+              <div className="skeleton-box" style={{ height: '40px', width: '250px' }}></div>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <div className="skeleton-box" style={{ height: '36px', width: '80px', borderRadius: '99px' }}></div>
+                <div className="skeleton-box" style={{ height: '36px', width: '100px', borderRadius: '99px' }}></div>
+                <div className="skeleton-box" style={{ height: '36px', width: '120px', borderRadius: '99px' }}></div>
+              </div>
+            </div>
+            <div className="events-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
+              {[1, 2, 3].map(i => (
+                <div key={i} style={{ background: 'rgba(255,255,255,0.02)', borderRadius: '24px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div className="skeleton-box" style={{ height: '200px', borderRadius: '16px' }}></div>
+                  <div className="skeleton-box" style={{ height: '28px', width: '70%' }}></div>
+                  <div className="skeleton-box" style={{ height: '16px', width: '100%' }}></div>
+                  <div className="skeleton-box" style={{ height: '16px', width: '90%' }}></div>
+                  <div className="skeleton-box" style={{ height: '80px', borderRadius: '12px', marginTop: '10px' }}></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Skeleton: SECTION 3 (Standard Grid) */}
+        <section className="events-standard section-padding bg-black">
+          <div className="container">
+            <div className="section-header-flex">
+              <div className="skeleton-box" style={{ height: '40px', width: '200px' }}></div>
+              <div className="skeleton-box" style={{ height: '20px', width: '120px' }}></div>
+            </div>
+            <div className="events-grid-4">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div className="skeleton-box" style={{ height: '240px', borderRadius: '16px' }}></div>
+                  <div className="skeleton-box" style={{ height: '24px', width: '80%' }}></div>
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <div className="skeleton-box" style={{ height: '16px', width: '40%' }}></div>
+                    <div className="skeleton-box" style={{ height: '16px', width: '30%' }}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Skeleton: SECTION 4 (Upcoming List) */}
+        <section className="events-upcoming section-padding bg-black-light">
+          <div className="container">
+            <div className="section-header-flex">
+              <div className="skeleton-box" style={{ height: '40px', width: '300px' }}></div>
+              <div className="skeleton-box" style={{ height: '20px', width: '120px' }}></div>
+            </div>
+            <div className="upcoming-list" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '30px', padding: '24px', background: 'rgba(255,255,255,0.02)', borderRadius: '16px' }}>
+                  <div className="skeleton-box" style={{ height: '80px', width: '80px', borderRadius: '12px', flexShrink: 0 }}></div>
+                  <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <div className="skeleton-box" style={{ height: '24px', width: '40%' }}></div>
+                    <div style={{ display: 'flex', gap: '16px' }}>
+                      <div className="skeleton-box" style={{ height: '16px', width: '120px' }}></div>
+                      <div className="skeleton-box" style={{ height: '16px', width: '100px' }}></div>
+                    </div>
+                  </div>
+                  <div className="skeleton-box" style={{ height: '44px', width: '140px', borderRadius: '99px', flexShrink: 0 }}></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </>
+    );
   }
 
   // Strip trailing 'Z' if present: Neon returns timestamp (no-tz) values with a 'Z'
