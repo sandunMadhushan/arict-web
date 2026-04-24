@@ -4,7 +4,7 @@ import './About.css';
 
 const About = () => {
   return (
-    <section id="about" className="about section-padding bg-black">
+    <section id="about" className="about section-padding bg-black" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
       <div className="container about-container">
         <div className="about-visual">
           <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Team meeting" className="about-img main-img" />
