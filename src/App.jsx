@@ -76,7 +76,7 @@ function App() {
         {/* Public Routes */}
         <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
         <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
-        <Route path="/services" element={<PublicLayout><Services /></PublicLayout>} />
+        <Route path="/events" element={<PublicLayout><Events /></PublicLayout>} />
         <Route path="/portfolio" element={<PublicLayout><Portfolio /></PublicLayout>} />
         <Route path="/blogs" element={<PublicLayout><Blogs /></PublicLayout>} />
         <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
