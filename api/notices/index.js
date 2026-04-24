@@ -3,6 +3,8 @@ import { requireAuth, checkAuth } from '../_auth.js';
 
 export default async function handler(req, res) {
   try {
+    if (req.method === 'OPTIONS') return res.status(200).end();
+    
     const isAuthed = checkAuth(req);
     
     if (req.method === 'GET') {

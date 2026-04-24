@@ -5,6 +5,8 @@ export default async function handler(req, res) {
   const { id } = req.query;
 
   try {
+    if (req.method === 'OPTIONS') return res.status(200).end();
+    
     if (req.method === 'GET') {
       const member = await sql`SELECT * FROM members WHERE id = ${id}`;
       if (member.length === 0) return res.status(404).json({ error: 'Not found' });

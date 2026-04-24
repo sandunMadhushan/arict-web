@@ -3,6 +3,8 @@ import { requireAuth } from '../_auth.js';
 
 export default async function handler(req, res) {
   try {
+    if (req.method === 'OPTIONS') return res.status(200).end();
+    
     if (req.method === 'GET') {
       const members = await sql`
         SELECT * FROM members 
