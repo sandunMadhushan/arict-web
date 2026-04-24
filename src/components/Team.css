@@ -2,7 +2,7 @@
    Our Team — Uniform Card Scroll Strip
    ══════════════════════════════════════ */
 
-.team-section { }
+.team-section { overflow: hidden; }
 
 /* ── Header ─────────────────────────── */
 .team-header {

@@ -6,9 +6,8 @@
   position: relative;
   display: flex;
   white-space: nowrap;
-  margin: 40px -5%;
-  width: 110%;
-  left: -5%;
+  transform: rotate(-1deg) scale(1.02);
+  margin: 40px 0;
 }
 
 .marquee-content {

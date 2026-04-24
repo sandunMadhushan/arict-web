@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  clip-path: inset(0);
+  overflow: hidden;
   box-sizing: border-box;
 }
 
