@@ -1,16 +1,41 @@
-# React + Vite
+# Arict Web V2 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the Arict Portfolio and Events Platform. This is a modern, high-performance web application built with React, Vite, and custom CSS glassmorphism themes.
 
-Currently, two official plugins are available:
+## ✨ Features
+- **3D Interactive Gallery**: A custom scroll-triggered horizontal carousel for highlighting portfolios and memories.
+- **Dynamic Events Portal**: Grid, list, and featured countdown layouts to display upcoming and past events.
+- **Admin Dashboard**: Secured routes for managing blogs, events, and notices.
+- **Premium Design**: Dark glassmorphism, responsive UI, and smooth Lenis scrolling.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🛠️ Built With
+- React 18
+- Vite
+- React Router DOM
+- Lenis (Smooth Scrolling)
+- Lucide React (Icons)
+- Sonner (Toast Notifications)
 
-## React Compiler
+## 🚀 Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
+- Node.js (v18 or higher recommended)
+- npm or yarn
 
-## Expanding the ESLint configuration
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/arict-web-v2.git
+   ```
+2. Install dependencies:
+   ```bash
+   cd arict-web-v2
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📜 License
+This project is licensed under the [WTFPL License](LICENSE).
