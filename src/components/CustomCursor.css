@@ -1,0 +1,34 @@
+/* Only apply custom cursor on devices with a real mouse */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+
+  .custom-cursor-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 45px;
+    height: 45px;
+    pointer-events: none;
+    z-index: 999999;
+    /* Adjust translate so the tip of the arrow is exactly at the mouse coordinates (top-left usually) */
+    transform: translate(-10%, -10%);
+    transition: transform 0.2s cubic-bezier(0.25, 1, 0.2, 1);
+  }
+
+  .custom-cursor-container.hovering {
+    transform: translate(-10%, -10%) scale(1.3);
+  }
+
+  .cursor-glass-image {
+    width: 100%;
+    height: 100%;
+    /* Use the user's cursor.png */
+    background-image: url('/cursor.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top left;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+  }
+}

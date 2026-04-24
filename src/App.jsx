@@ -23,9 +23,12 @@ import { Toaster } from 'sonner';
 
 import './index.css';
 
+import CustomCursor from './components/CustomCursor';
+
 // Layout wrapper for public pages
 const PublicLayout = ({ children }) => (
   <>
+    <CustomCursor />
     <Navbar />
     <main>{children}</main>
     <Footer />
