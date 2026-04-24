@@ -24,8 +24,7 @@ export function getDriveEmbedUrl(url) {
 
   if (fileId) {
     // This is the most reliable format for embedding Drive images directly
-    return `https://drive.google.com/uc?export=view&id=${fileId}`;
-    // Alternative: https://lh3.googleusercontent.com/d/${fileId}
+    return `https://lh3.googleusercontent.com/d/${fileId}`;
   }
   
   return null;
