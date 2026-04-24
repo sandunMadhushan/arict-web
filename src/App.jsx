@@ -23,8 +23,8 @@ import AdminNotices from './pages/Admin/AdminNotices';
 import { Toaster } from 'sonner';
 
 import './index.css';
-
 import CustomCursor from './components/CustomCursor';
+import CalendarWidget from './components/CalendarWidget';
 
 // Layout wrapper for public pages
 const PublicLayout = ({ children }) => (
@@ -34,6 +34,7 @@ const PublicLayout = ({ children }) => (
     <main>{children}</main>
     <Footer />
     <ScrollToTop />
+    <CalendarWidget />
   </>
 );
 
